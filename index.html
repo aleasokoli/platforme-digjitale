@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paws & Co — Dyqan Online për Qen & Mace</title>
+    <style>
+        :root {
+            --primary: #ea580c;
+            --primary-dark: #c2410c;
+            --primary-soft: #fff7ed;
+            --secondary: #1e293b;
+            --muted: #64748b;
+            --bg: #f1f5f9;
+            --card: #ffffff;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --border: #e2e8f0;
+            --radius: 16px;
+            --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+            --shadow-md: 0 12px 28px rgba(15, 23, 42, 0.09);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--secondary);
+            line-height: 1.55;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0.9rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), #fb923c);
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-size: 1.35rem;
+            box-shadow: 0 6px 14px rgba(234, 88, 12, 0.25);
+        }
+
+        .brand-text h1 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--secondary);
+            letter-spacing: -0.3px;
+        }
+
+        .brand-text span {
+            font-size: 0.78rem;
+            color: var(--muted);
+            display: block;
+            margin-top: -3px;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-outline {
+            background: #fff;
+            color: var(--secondary);
+            border: 1px solid var(--border);
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-soft);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            padding: 10px 16px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .count-pill {
+            background: var(--secondary);
+            color: #fff;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-weight: 700;
+        }
+
+        .btn-primary .count-pill {
+            background: #fff;
+            color: var(--primary);
+        }
+
+        /* Hero Banner */
+        .hero {
+            max-width: 1280px;
+            margin: 1.5rem auto 0;
+            padding: 0 5%;
+        }
+
+        .hero-box {
+            background: linear-gradient(120deg, #1e293b 0%, #334155 60%, #ea580c 160%);
+            color: #fff;
+            border-radius: 22px;
+            padding: 2rem 2.4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            box-shadow: var(--shadow-md);
+        }
+
+        .hero-content {
+            max-width: 620px;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.14);
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.7rem;
+        }
+
+        .hero-box h2 {
+            font-size: 1.85rem;
+            line-height: 1.2;
+            margin-bottom: 0.6rem;
+        }
+
+        .hero-box p {
+            color: #cbd5e1;
+            font-size: 0.98rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-chip {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            padding: 0.9rem 1.2rem;
+            border-radius: 14px;
+            min-width: 120px;
+        }
+
+        .stat-chip strong {
+            display: block;
+            font-size: 1.35rem;
+            color: #fdba74;
+        }
+
+        .stat-chip span {
+            font-size: 0.78rem;
+            color: #e2e8f0;
+        }
+
+        /* Filtrat & Kërkimi */
+        .toolbar {
+            max-width: 1280px;
+            margin: 1.6rem auto 1rem;
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: #fff;
+            color: var(--secondary);
+            border: 1px solid var(--border);
+            padding: 9px 15px;
+            font-size: 0.88rem;
+            border-radius: 999px;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(234, 88, 12, 0.25);
+        }
+
+        .toolbar-right {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-input, .sort-select {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 9px 14px;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            outline: none;
+        }
+
+        .search-input {
+            width: 240px;
+        }
+
+        .search-input:focus, .sort-select:focus {
+            border-color: var(--primary);
+        }
+
+        /* Rrjeti i Produkteve */
+        .catalog-wrap {
+            max-width: 1280px;
+            margin: 0 auto 4rem;
+            padding: 0 5%;
+        }
+
+        .results-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
+            gap: 1.4rem;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .img-box {
+            position: relative;
+            height: 210px;
+            background: #ffffff;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.6rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .img-box img {
+            transform: scale(1.04);
+        }
+
+        .img-fallback {
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #fff7ed, #ffedd5);
+            color: var(--primary-dark);
+            font-size: 3.2rem;
+            border-radius: 12px;
+        }
+
+        .img-fallback small {
+            font-size: 0.78rem;
+            font-weight: 700;
+            margin-top: 6px;
+            color: var(--secondary);
+        }
+
+        .pet-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.94);
+            color: var(--secondary);
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        .subcat-tag {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            padding: 3px 9px;
+            border-radius: 8px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            background: rgba(30, 41, 59, 0.85);
+            color: #fff;
+        }
+
+        .card-body {
+            padding: 1.15rem 1.25rem 1.3rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.35rem;
+        }
+
+        .card-desc {
+            font-size: 0.86rem;
+            color: var(--muted);
+            margin-bottom: 1rem;
+            flex: 1;
+        }
+
+        .card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 0.85rem;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .price-wrap {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-main {
+            font-size: 1.22rem;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        .price-note {
+            font-size: 0.72rem;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .add-btn {
+            background: var(--primary);
+            color: #fff;
+            padding: 9px 14px;
+            font-size: 0.86rem;
+            border-radius: 10px;
+        }
+
+        .add-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Modals */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(3px);
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .modal-backdrop.open {
+            display: flex;
+        }
+
+        .modal-panel {
+            background: #fff;
+            width: 100%;
+            max-width: 640px;
+            max-height: 90vh;
+            border-radius: 20px;
+            padding: 1.7rem;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1rem;
+            margin-bottom: 1.1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-top h2 {
+            font-size: 1.25rem;
+        }
+
+        .close-x {
+            background: #f1f5f9;
+            color: var(--secondary);
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            font-size: 1.2rem;
+            display: grid;
+            place-items: center;
+        }
+
+        .close-x:hover {
+            background: #e2e8f0;
+        }
+
+        /* Cart Items */
+        .cart-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .cart-thumb {
+            width: 54px;
+            height: 54px;
+            border-radius: 10px;
+            object-fit: contain;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            padding: 3px;
+            flex-shrink: 0;
+        }
+
+        .cart-meta {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .cart-meta strong {
+            display: block;
+            font-size: 0.94rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .cart-meta small {
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        .qty-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .qty-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: #f1f5f9;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .qty-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .qty-val {
+            min-width: 20px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .del-btn {
+            background: #fee2e2;
+            color: var(--danger);
+            padding: 6px 10px;
+            font-size: 0.78rem;
+            border-radius: 8px;
+        }
+
+        .del-btn:hover {
+            background: #fecaca;
+        }
+
+        .summary-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1rem 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.92rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--secondary);
+            padding-top: 0.6rem;
+            border-top: 1px dashed #cbd5e1;
+            margin-top: 0.4rem;
+        }
+
+        /* Checkout Form */
+        .order-form {
+            margin-top: 1.2rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .order-form h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.85rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.85rem;
+        }
+
+        .field {
+            margin-bottom: 0.85rem;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        .field label {
+            display: block;
+            font-size: 0.83rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--secondary);
+        }
+
+        .field input, .field select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .field input:focus, .field select:focus {
+            border-color: var(--primary);
+        }
+
+        .checkout-submit {
+            width: 100%;
+            background: var(--success);
+            color: #fff;
+            padding: 13px;
+            font-size: 1rem;
+            border-radius: 12px;
+            margin-top: 0.3rem;
+        }
+
+        .checkout-submit:hover {
+            background: #15803d;
+        }
+
+        /* Orders History */
+        .order-item-card {
+            border: 1px solid var(--border);
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 1rem 1.15rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .order-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.4rem;
+        }
+
+        .order-code {
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .status-badge {
+            background: #dcfce7;
+            color: #166534;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.76rem;
+            font-weight: 700;
+        }
+
+        /* Toast */
+        #toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--secondary);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(14px);
+            pointer-events: none;
+            transition: all 0.25s ease;
+            z-index: 300;
+        }
+
+        #toast.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .search-input {
+                width: 100%;
+            }
+            .hero-box {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a class="brand" href="#" onclick="resetFilters(); return false;">
+            <div class="brand-logo">🐾</div>
+            <div class="brand-text">
+                <h1>Paws &amp; Co</h1>
+                <span>Vetëm për Qen &amp; Mace</span>
+            </div>
+        </a>
+
+        <div class="nav-actions">
+            <button class="btn-outline" onclick="openModal('ordersModal')">
+                📦 Porositë <span class="count-pill" id="ordersBadge">0</span>
+            </button>
+            <button class="btn-primary" onclick="openModal('cartModal')">
+                🛒 Shporta <span class="count-pill" id="cartBadge">0</span>
+            </button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-box">
+            <div class="hero-content">
+                <span class="hero-tag">🐶 QEN &amp; MACE • KUALITET I ZGJEDHUR</span>
+                <h2>Gjithçka që duan qeni dhe macja juaj në një vend</h2>
+                <p>Ushqime të balancuara, lodra argëtuese, shtretër të rehatshëm, qafore e parzmore, si dhe pajisje higjienike.</p>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-chip">
+                    <strong>16</strong>
+                    <span>Produkte aktive</span>
+                </div>
+                <div class="stat-chip">
+                    <strong>mbi 35.00 €</strong>
+                    <span>Transport falas </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="toolbar">
+        <div class="filter-group" id="categoryFilters">
+            <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)">Të gjitha (16)</button>
+            <button class="filter-btn" data-filter="Qen" onclick="setFilter('Qen', this)">🐶 Vetëm Qen</button>
+            <button class="filter-btn" data-filter="Mace" onclick="setFilter('Mace', this)">🐱 Vetëm Mace</button>
+            <button class="filter-btn" data-filter="Ushqim" onclick="setFilter('Ushqim', this)">🥩 Ushqim</button>
+            <button class="filter-btn" data-filter="Lodra & Aksesorë" onclick="setFilter('Lodra & Aksesorë', this)">🎾 Lodra &amp; Aksesorë</button>
+            <button class="filter-btn" data-filter="Higjienë & Shtretër" onclick="setFilter('Higjienë & Shtretër', this)">🛏️ Higjienë &amp; Shtretër</button>
+        </div>
+
+        <div class="toolbar-right">
+            <input type="text" class="search-input" id="searchBox" placeholder="Kërko p.sh. salmon, zinxhir, kullë..." oninput="renderCatalog()">
+            <select class="sort-select" id="sortBox" onchange="renderCatalog()">
+                <option value="default">Renditja: Të rekomanduara</option>
+                <option value="price-asc">Çmimi: Nga më i ulëti</option>
+                <option value="price-desc">Çmimi: Nga më i larti</option>
+                <option value="name-asc">Emri: A - Z</option>
+            </select>
+        </div>
+    </section>
+
+    <main class="catalog-wrap">
+        <div class="results-bar">
+            <span id="resultsCount">Duke shfaqur 16 produkte</span>
+            <span>Porositë ruhen automatikisht në shfletues</span>
+        </div>
+        <div class="grid" id="catalogGrid"></div>
+    </main>
+
+    <!-- Modal: Shporta & Porosia -->
+    <div class="modal-backdrop" id="cartModal">
+        <div class="modal-panel">
+            <div class="modal-top">
+                <h2>🛒 Shporta juaj</h2>
+                <button class="close-x" onclick="closeModal('cartModal')">&times;</button>
+            </div>
+
+            <div id="cartList"></div>
+
+            <div class="summary-box" id="cartSummary" style="display:none;">
+                <div class="summary-line">
+                    <span>Nëntotali i produkteve:</span>
+                    <span id="subtotalText">0.00 €</span>
+                </div>
+                <div class="summary-line">
+              <span id="shippingLabel">Transporti :</span>
+                    <span id="shippingText" style="font-weight:700;">2.50 €</span>
+                </div>
+                <div class="summary-total">
+                    <span>Totali për pagesë:</span>
+                    <span id="grandTotalText">0.00 €</span>
+                </div>
+            </div>
+
+            <form class="order-form" id="orderForm" onsubmit="placeOrder(event)" style="display:none;">
+                <h3>📋 Plotëso të dhënat për porosi</h3>
+                <div class="form-grid">
+                    <div class="field">
+                        <label>Emri dhe Mbiemri *</label>
+                        <input type="text" id="fullName" required placeholder="p.sh. Blerta Gashi">
+                    </div>
+                    <div class="field">
+                        <label>Numri i Telefonit *</label>
+                        <input type="tel" id="phone" required placeholder="p.sh. 049 222 333">
+                    </div>
+                    <div class="field full">
+                        <label>Qyteti dhe Adresa *</label>
+                        <input type="text" id="address" required placeholder="p.sh. Prizren, Rr. Remzi Ademaj nr. 45">
+                    </div>
+                    <div class="field full">
+                        <label>Mënyra e Pagesës</label>
+                        <select id="payment">
+                            <option value="Para në dorë (Cash)">Para në dorë me korrier (Cash)</option>
+                            <option value="Kartelë në dorëzim (POS)">Kartelë bankare në dorëzim (POS)</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="checkout-submit">✅ Konfirmo dhe Dërgo Porosinë</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Porositë e Kryera -->
+    <div class="modal-backdrop" id="ordersModal">
+        <div class="modal-panel">
+            <div class="modal-top">
+                <h2>📦 Historiku i Porosive</h2>
+                <button class="close-x" onclick="closeModal('ordersModal')">&times;</button>
+            </div>
+            <div id="ordersList"></div>
+        </div>
+    </div>
+
+    <div id="toast">U shtua në shportë!</div>
+
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: "Ushqim i Thatë Premium për Qen (5kg)",
+                pet: "Qen",
+                category: "Ushqim",
+                price: 24.50,
+                image: "https://i5.walmartimages.com/asr/8b34a3cd-1206-4116-beb7-545ee1461907.8b854b6724e3155fa8586924c00c6877.jpeg",
+                fallbackEmoji: "🦴",
+                desc: "Kroketa me proteina cilësore, omega-3 dhe vitamina për energji të plotë çdo ditë."
+            },
+            {
+                id: 2,
+                name: "Ushqim Këlyshësh me Pulë & Oriz (3kg)",
+                pet: "Qen",
+                category: "Ushqim",
+                price: 18.00,
+                image: "https://www.primalpetfoods.com/cdn/shop/files/KITR-Bowl-TOP_Square.png?v=1770814332&width=1946",
+                fallbackEmoji: "🐶",
+                desc: "Formulë e butë për tretje të lehtë dhe zhvillim të shëndetshëm të kockave."
+            },
+            {
+                id: 3,
+                name: "Parzmore & Zinxhir Shëtitjeje për Qen",
+                pet: "Qen",
+                category: "Lodra & Aksesorë",
+                price: 16.50,
+                image: "https://s.turbifycdn.com/aah/gundog/kurgo-tru-fit-smart-dog-walking-harness-59.png",
+                fallbackEmoji: "🦮",
+                desc: "Komplet i rehatshëm me material të butë që nuk shtrëngon qafën."
+            },
+            {
+                id: 4,
+                name: "Qafore Reflektuese me Kapëse të Fortë",
+                pet: "Qen",
+                category: "Lodra & Aksesorë",
+                price: 9.00,
+                image: "https://cdni.llbean.net/is/image/wim/302845_257_41?hei=1095&wid=950&resMode=sharp2&defaultImage=llbprod/112843_0_44",
+                fallbackEmoji: "🔗",
+                desc: "E rregullueshme dhe e dukshme edhe gjatë shëtitjeve në mbrëmje."
+            },
+            {
+                id: 5,
+                name: "Top Gome Rezistent për Përtypje",
+                pet: "Qen",
+                category: "Lodra & Aksesorë",
+                price: 6.50,
+                image: "http://sodapup.com/cdn/shop/products/sodapup-dog-toys-id-ball-ultra-durable-rubber-chew-ball-large-yellow-13277340401798.png?v=1637050470",
+                fallbackEmoji: "🎾",
+                desc: "Ndihmon në pastrimin e dhëmbëve dhe mban qenin aktiv gjatë lojës."
+            },
+            {
+                id: 6,
+                name: "Shtrat Ortopedik i Butë për Qen të Mëdhenj",
+                pet: "Qen",
+                category: "Higjienë & Shtretër",
+                price: 36.00,
+                image: "http://funnyfuzzy.com/cdn/shop/files/LargeThickScratch-resistantSpineProtectionDogCushion_5.jpg?v=1775206809",
+                fallbackEmoji: "🛏️",
+                desc: "Mbështetje e mirë për nyjat, me mbulesë të heqshme që lahet lehtë në lavatriçe."
+            },
+            {
+                id: 7,
+                name: "Shampo Qetësuese pa Sulfate për Qen",
+                pet: "Qen",
+                category: "Higjienë & Shtretër",
+                price: 8.50,
+                image: "https://christiesdirect.com/media/catalog/product/cache/fbf3e526978997e8e1ab8e80b2912bc8/m/i/mixing_bottle_1.jpg",
+                fallbackEmoji: "🧴",
+                desc: "Mbron lëkurën e ndjeshme dhe lë qimen të butë e me aromë të freskët."
+            },
+            {
+                id: 8,
+                name: "Biskota Shpërblyese me Mëlçi Viçi (500g)",
+                pet: "Qen",
+                category: "Ushqim",
+                price: 7.00,
+                image: "https://www.bluebuffalo.com/globalassets/product-detail-pages/dog-treats/blue/large-product-image/pdp_desktop_santasnacks_crunchy.png",
+                fallbackEmoji: "🥩",
+                desc: "Ideale për trajnim, bindje dhe shpërblime të shijshme çdo ditë."
+            },
+            {
+                id: 9,
+                name: "Kullë Gërvishtëse me Platformë",
+                pet: "Mace",
+                category: "Lodra & Aksesorë",
+                price: 42.00,
+                image: "https://media.very.co.uk/i/very/W3MHZ_SQ1_0000000088_NO_COLOR_RSr?$pdp_300x400_x2$&fmt=jpg",
+                fallbackEmoji: "🐈",
+                desc: "Mbron mobiljet duke ofruar sipërfaqe të fortë për mprehje thonjsh dhe pushim."
+            },
+            {
+                id: 10,
+                name: "Shtyllë Gërvishtëse Kompakt për Apartament",
+                pet: "Mace",
+                category: "Lodra & Aksesorë",
+                price: 21.00,
+                image: "https://www.fairelapet.com/cdn/shop/files/FP51_PT9_2a586274-290c-481a-8bb8-105c05d3dbdb.jpg?v=1782442474&width=1000",
+                fallbackEmoji: "🪵",
+                desc: "Bazë e qëndrueshme me litar natyral dhe majë të butë për relaks."
+            },
+            {
+                id: 11,
+                name: "Ushqim i Thatë me Salmon për Mace (2.5kg)",
+                pet: "Mace",
+                category: "Ushqim",
+                price: 15.50,
+                image: "https://openfarmpet.com/cdn/shop/files/OFP-Cat-Grain-Free-Salmon-Kibble-Recipe-1-668x580.png?v=1738774002",
+                fallbackEmoji: "🐟",
+                desc: "I pasur me acide yndyrore omega për qime me shkëlqim dhe shëndet urinar."
+            },
+            {
+                id: 12,
+                name: "Pako me 6 Kanaçe Ushqim të Lagësht për Mace",
+                pet: "Mace",
+                category: "Ushqim",
+                price: 9.50,
+                image: "https://davespetfood.com/cdn/shop/files/013124_PLM6267_Naturally-Healthy-Chicken-22oz-CAT-Loaf_12oz_624g_Can_Label_031924.jpg?v=1721658495&width=1445",
+                fallbackEmoji: "🥫",
+                desc: "Copëza mishi në salcë të shijshme që ndihmojnë edhe në hidratimin e maces."
+            },
+            {
+                id: 13,
+                name: "Lopatë Pastrimi për Kuti Rëre të Maceve",
+                pet: "Mace",
+                category: "Higjienë & Shtretër",
+                price: 6.00,
+                image: "https://m.media-amazon.com/images/I/61TpmZ5KuaL._AC_UL450_SY450_QL70_.jpg", 
+                fallbackEmoji: "🧹",
+                desc: "E lehtë dhe e qëndrueshme me vrima të menduara për pastrim të shpejtë të rërës."
+            },
+            {
+                id: 14,
+                name: "Tas Qeramik Ushqimi & Uji për Mace",
+                pet: "Mace",
+                category: "Higjienë & Shtretër",
+                price: 11.00,
+                image: "https://i.ebayimg.com/images/g/p1AAAOSweVxnIR6Q/s-l1200.jpg",
+                fallbackEmoji: "🥣",
+                desc: "Dizajn i cekët dhe i gjerë që nuk lodh mustaqet e maces dhe lahet lehtë."
+            },
+            {
+                id: 15,
+                name: "Rërë Grumbulluese me Kontroll Arome (5L)",
+                pet: "Mace",
+                category: "Higjienë & Shtretër",
+                price: 9.50,
+                image: "https://s7d2.scene7.com/is/image/PetSmart/5378573?fmt=webp&wid=400&hei=400&fit=constrain",
+                fallbackEmoji: "✨",
+                desc: "Formon topa të fortë shpejt dhe neutralizon aromat e pakëndshme."
+            },
+            {
+                id: 16,
+                name: "Lodër Shkop me Pendë për Mace",
+                pet: "Mace",
+                category: "Lodra & Aksesorë",
+                price: 7.50,
+                image: "https://nekongeru.nz/wp-content/uploads/2022/11/feather-wand.png",
+                fallbackEmoji: "🪶",
+                desc: "Stimulon instinktin e gjuetisë dhe redukton mërzinë kur macja rri vetëm."
+            }
+        ];
+
+        const FREE_SHIPPING_THRESHOLD = 35.00;
+        const SHIPPING_FEE = 2.50;
+
+        let cart = JSON.parse(localStorage.getItem("pawsco_dogcat_cart")) || [];
+        let orders = JSON.parse(localStorage.getItem("pawsco_dogcat_orders")) || [];
+        let activeFilter = "all";
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderCatalog();
+            renderCart();
+            renderOrders();
+        });
+
+        function setFilter(filterValue, btnEl) {
+            activeFilter = filterValue;
+            document.querySelectorAll("#categoryFilters .filter-btn").forEach(b => b.classList.remove("active"));
+            if (btnEl) btnEl.classList.add("active");
+            renderCatalog();
+        }
+
+        function resetFilters() {
+            activeFilter = "all";
+            document.getElementById("searchBox").value = "";
+            document.getElementById("sortBox").value = "default";
+            document.querySelectorAll("#categoryFilters .filter-btn").forEach((b, idx) => {
+                b.classList.toggle("active", idx === 0);
+            });
+            renderCatalog();
+        }
+
+        function handleImgError(imgEl) {
+            imgEl.style.display = "none";
+            const fallback = imgEl.nextElementSibling;
+            if (fallback) fallback.style.display = "flex";
+        }
+
+        function renderCatalog() {
+            const grid = document.getElementById("catalogGrid");
+            const query = document.getElementById("searchBox").value.trim().toLowerCase();
+            const sort = document.getElementById("sortBox").value;
+
+            let list = products.filter(item => {
+                const matchFilter =
+                    activeFilter === "all" ||
+                    item.pet === activeFilter ||
+                    item.category === activeFilter;
+
+                const matchQuery =
+                    !query ||
+                    item.name.toLowerCase().includes(query) ||
+                    item.desc.toLowerCase().includes(query) ||
+                    item.pet.toLowerCase().includes(query) ||
+                    item.category.toLowerCase().includes(query);
+
+                return matchFilter && matchQuery;
+            });
+
+            if (sort === "price-asc") list.sort((a, b) => a.price - b.price);
+            if (sort === "price-desc") list.sort((a, b) => b.price - a.price);
+            if (sort === "name-asc") list.sort((a, b) => a.name.localeCompare(b.name, "sq"));
+
+            document.getElementById("resultsCount").innerText =
+                `Duke shfaqur ${list.length} nga ${products.length} produkte`;
+
+            if (list.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; background: #fff; padding: 2.5rem; border-radius: 16px; text-align: center; border: 1px solid var(--border);">
+                        <p style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem;">Nuk u gjet asnjë produkt</p>
+                        <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem;">Provo një fjalë tjetër kyçe ose kthehu te të gjitha produktet.</p>
+                        <button class="btn-primary" onclick="resetFilters()">Pastro filtrat</button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = list.map(p => {
+                const petLabel = p.pet === "Qen" ? "🐶 Qen" : "🐱 Mace";
+                return `
+                    <article class="card">
+                        <div class="img-box">
+                            <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="handleImgError(this)">
+                            <div class="img-fallback">
+                                <span>${p.fallbackEmoji}</span>
+                                <small>${p.pet}</small>
+                            </div>
+                            <span class="pet-badge">${petLabel}</span>
+                            <span class="subcat-tag">${p.category}</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">${p.name}</h3>
+                            <p class="card-desc">${p.desc}</p>
+                            <div class="card-bottom">
+                                <div class="price-wrap">
+                                    <span class="price-main">${p.price.toFixed(2)} €</span>
+                                    <span class="price-note">Në stok</span>
+                                </div>
+                                <button class="add-btn" onclick="addToCart(${p.id})">+ Shto në shportë</button>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join("");
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existing = cart.find(c => c.id === productId);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    pet: product.pet,
+                    price: product.price,
+                    image: product.image,
+                    fallbackEmoji: product.fallbackEmoji,
+                    qty: 1
+                });
+            }
+
+            saveCart();
+            renderCart();
+            showToast(`U shtua: ${product.name}`);
+        }
+
+        function changeQty(productId, delta) {
+            const item = cart.find(c => c.id === productId);
+            if (!item) return;
+
+            item.qty += delta;
+            if (item.qty <= 0) {
+                cart = cart.filter(c => c.id !== productId);
+            }
+            saveCart();
+            renderCart();
+        }
+
+        function removeItem(productId) {
+            cart = cart.filter(c => c.id !== productId);
+            saveCart();
+            renderCart();
+        }
+
+        function renderCart() {
+            const listEl = document.getElementById("cartList");
+            const summaryEl = document.getElementById("cartSummary");
+            const formEl = document.getElementById("orderForm");
+            const badgeEl = document.getElementById("cartBadge");
+
+            const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
+            badgeEl.innerText = totalQty;
+
+            if (cart.length === 0) {
+                listEl.innerHTML = `
+                    <div style="text-align: center; padding: 2rem 0; color: var(--muted);">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🛒</div>
+                        <p style="font-weight: 600; color: var(--secondary);">Shporta juaj është bosh</p>
+                        <p style="font-size: 0.88rem;">Zgjidhni produkte për qen ose mace nga katalogu.</p>
+                    </div>
+                `;
+                summaryEl.style.display = "none";
+                formEl.style.display = "none";
+                return;
+            }
+
+            summaryEl.style.display = "block";
+            formEl.style.display = "block";
+
+            listEl.innerHTML = cart.map(item => `
+                <div class="cart-row">
+                    <img class="cart-thumb" src="${item.image}" alt="${item.name}" onerror="this.style.display='none'">
+                    <div class="cart-meta">
+                        <strong>${item.fallbackEmoji} ${item.name}</strong>
+                        <small>${item.pet} • ${item.price.toFixed(2)} € / copë</small>
+                    </div>
+                    <div class="qty-box">
+                        <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+                        <span class="qty-val">${item.qty}</span>
+                        <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+                    </div>
+                    <div style="min-width: 68px; text-align: right; font-weight: 700; font-size: 0.92rem;">
+                        ${(item.price * item.qty).toFixed(2)} €
+                    </div>
+                    <button class="del-btn" onclick="removeItem(${item.id})">Hiq</button>
+                </div>
+            `).join("");
+
+            const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+            const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+            const grandTotal = subtotal + shipping;
+
+            document.getElementById("subtotalText").innerText = `${subtotal.toFixed(2)} €`;
+            document.getElementById("shippingText").innerText =
+                shipping === 0 ? "FALAS 🎉" : `${shipping.toFixed(2)} €`;
+            document.getElementById("grandTotalText").innerText = `${grandTotal.toFixed(2)} €`;
+        }
+
+        function placeOrder(e) {
+            e.preventDefault();
+            if (cart.length === 0) return;
+
+            const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+            const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+            const total = subtotal + shipping;
+
+            const order = {
+                id: "PC-" + Math.floor(100000 + Math.random() * 900000),
+                date: new Date().toLocaleString("sq-AL"),
+                customer: {
+                    name: document.getElementById("fullName").value.trim(),
+                    phone: document.getElementById("phone").value.trim(),
+                    address: document.getElementById("address").value.trim(),
+                    payment: document.getElementById("payment").value
+                },
+                items: cart.map(c => ({ name: c.name, qty: c.qty, price: c.price })),
+                subtotal: subtotal.toFixed(2),
+                shipping: shipping.toFixed(2),
+                total: total.toFixed(2),
+                status: "Konfirmuar"
+            };
+
+            orders.unshift(order);
+            localStorage.setItem("pawsco_dogcat_orders", JSON.stringify(orders));
+
+            cart = [];
+            saveCart();
+            renderCart();
+            renderOrders();
+            document.getElementById("orderForm").reset();
+
+            closeModal("cartModal");
+            openModal("ordersModal");
+            showToast(`Porosia ${order.id} u regjistrua me sukses!`);
+        }
+
+        function renderOrders() {
+            const listEl = document.getElementById("ordersList");
+            document.getElementById("ordersBadge").innerText = orders.length;
+
+            if (orders.length === 0) {
+                listEl.innerHTML = `
+                    <div style="text-align: center; padding: 2rem 0; color: var(--muted);">
+                        <p style="font-weight: 600; color: var(--secondary);">Nuk ka porosi të kryera ende</p>
+                        <p style="font-size: 0.88rem;">Porositë tuaja do të shfaqen këtu sapo të konfirmoni një blerje.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            listEl.innerHTML = orders.map(o => {
+                const itemsText = o.items.map(i => `${i.qty}× ${i.name} (${(i.qty * i.price).toFixed(2)} €)`).join(" • ");
+                return `
+                    <div class="order-item-card">
+                        <div class="order-top">
+                            <span class="order-code">Porosia #${o.id}</span>
+                            <span class="status-badge">${o.status}</span>
+                        </div>
+                        <div style="font-size: 0.78rem; color: var(--muted); margin-bottom: 0.5rem;">${o.date}</div>
+                        <div style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Artikujt:</strong> ${itemsText}</div>
+                        <div style="font-size: 0.85rem; color: var(--muted);">
+                            <strong>Klienti:</strong> ${o.customer.name} (${o.customer.phone})<br>
+                            <strong>Adresa:</strong> ${o.customer.address}<br>
+                            <strong>Pagesa:</strong> ${o.customer.payment}
+                        </div>
+                        <div style="text-align: right; font-weight: 800; margin-top: 0.6rem; font-size: 1rem;">
+                            Totali: ${o.total} €
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function saveCart() {
+            localStorage.setItem("pawsco_dogcat_cart", JSON.stringify(cart));
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.add("open");
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove("open");
+        }
+
+        document.querySelectorAll(".modal-backdrop").forEach(backdrop => {
+            backdrop.addEventListener("click", (e) => {
+                if (e.target === backdrop) backdrop.classList.remove("open");
+            });
+        });
+
+        let toastTimer;
+        function showToast(msg) {
+            const toast = document.getElementById("toast");
+            toast.innerText = msg;
+            toast.classList.add("visible");
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove("visible"), 2400);
+        }
+    </script>
+</body>
+</html>
